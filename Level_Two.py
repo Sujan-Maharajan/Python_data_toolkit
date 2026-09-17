@@ -10,16 +10,19 @@ class Record:
     score: str
 
     def is_valid(self):
-        if self.id.strip()!="" and self.name.strip()!="" and self.age.strip()!="" and self.city.strip()!="" and self.score.strip()!="":
-            return True
-        else:
-            return False
+            errors= self.get_errors()
+
+            if len(errors)==0:
+                return True
+            else:
+                return False
 
     def get_errors(self):
         errors= []
 
         if self.id.strip()=="":
             errors.append("id is empty")
+
         if self.name.strip()=="":
             errors.append("name is empty")
 
@@ -27,14 +30,29 @@ class Record:
             errors.append("age is empty")
         else:
             try:
-                int(self.age)
+                age= int(self.age)
+
+                if age<0 or age>120:
+                    errors.append("age is not in range")
+
             except ValueError:
                 errors.append("age is not a number")
 
         if self.city.strip()=="":
             errors.append("city is empty")
+
         if self.score.strip()=="":
             errors.append("score is empty")
+        else:
+            try:
+                score= float(self.score)
+
+                if score<0 or score>100:
+                    errors.append("score is not in range")
+
+            except ValueError:
+                errors.append("score is not a number")
+        
         return errors
         
 with open('messy_people.csv','r') as file:
