@@ -61,9 +61,16 @@ with open('messy_people.csv','r') as file:
 
 valid_records= []
 invalid_records= []
+seen_ids= set()
 
 for i in data:
     obj= Record(i["id"], i["name"], i["age"], i["city"], i["score"])
+    
+    if obj.id in seen_ids:
+        print("Duplicate id=",obj.id)
+    else:
+        seen_ids.add(obj.id)
+
     if obj.is_valid():
         valid_records.append(obj)
     else:
