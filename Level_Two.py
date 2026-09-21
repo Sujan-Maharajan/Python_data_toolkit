@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import csv
+from words_to_num import word_into_number
 
 @dataclass
 class Record:
@@ -57,17 +58,54 @@ class Record:
                 errors.append("score is not a number")
         
         return errors
+
+def clean_age(age,mean_age=None):
+    age= age.strip()
+
+    try:
+        age= int(age)
+
+    except ValueError:
+        if age in word_into_number:
+            age= word_into_number[age]
+        else:
+            return mean_age
+        
+    if age<0 or age>120:
+        return None
+
+    return age
         
 with open('messy_people.csv','r') as file:
     read_FILE= csv.DictReader(file)
     data= list(read_FILE)
 
 cleaned_records= []
+valid_ages= []
 duplicate_count= 0
 seen_ids= set()
 
+#Collectting valid ages for mean
+
+for i in data:
+    age= clean_age(i["age"])
+
+    if age is not None:
+        valid_ages.append(age)
+
+mean_age= sum(valid_ages)/len(valid_ages)
+print("Mean Age=",mean_age)
+
+
 for i in data:
     obj= Record(i["id"], i["name"], i["age"], i["city"], i["score"])
+
+    age= clean_age(obj.age,mean_age)
+
+    if age is None:
+        continue
+
+    obj.age= (age)
 
     if obj.id.strip()=="":
         continue
