@@ -62,41 +62,27 @@ with open('messy_people.csv','r') as file:
     read_FILE= csv.DictReader(file)
     data= list(read_FILE)
 
-valid_records= []
-invalid_records= []
+cleaned_records= []
 duplicate_count= 0
 seen_ids= set()
 
 for i in data:
     obj= Record(i["id"], i["name"], i["age"], i["city"], i["score"])
 
-    if obj.id.strip()!="":
+    if obj.id.strip()=="":
+        continue
 
-        if obj.id in seen_ids:
-            duplicate_id= True
-            duplicate_count+= 1
-        else:
-            duplicate_id= False
-            seen_ids.add(obj.id)
+    if obj.id in seen_ids:
+        duplicate_count+= 1
+        continue
 
-    else:
-        duplicate_id= False
-
-    if obj.is_valid(duplicate_id):
-        valid_records.append(obj)
-    else:
-        invalid_records.append((obj,duplicate_id))
+    seen_ids.add(obj.id)
+    cleaned_records.append(obj)
         
 
-print("Valid Records=",len(valid_records))
-print("Invalid Records=",len(invalid_records))
+print("Cleaned Records=",len(cleaned_records))
 print("Duplicate Ids=",duplicate_count)
 
-print("\nValid records are:")
-for record in valid_records:
+print("\nCleaned records are:")
+for record in cleaned_records:
     print(record)
-
-print("\nInvalid records are:")
-for record, duplicate_id in invalid_records:
-    print(record)
-    print(record.get_errors(duplicate_id))
