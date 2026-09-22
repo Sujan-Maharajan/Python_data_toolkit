@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import csv
 from words_to_num import word_into_number
-from Level_Two import clean_age, clean_score
+from Level_Two import clean_age, clean_score, clean_city, clean_name
 
 @dataclass
 class Record:
@@ -43,10 +43,59 @@ class Dataset:
 
         return mean_age, mean_score
 
+    def clean(self) -> None:
+        mean_age, mean_score= self.calculate_means()
+
+        cleaned_records= []
+        seen_ids= set()
+
+        for record in self.records:
+
+            if record.id.strip()=="":
+                continue
+
+            if record.id in seen_ids:
+                continue
+
+            age= clean_age(record.age,mean_age)
+
+            if age is None:
+                continue
+
+            score= clean_score(record.score,mean_score)
+
+            if score is None:
+                continue
+
+            record.age= age
+            record.score= score
+            record.name= clean_name(record.name)
+            record.city= clean_city(record.city)
+
+            seen_ids.add(record.id)
+            cleaned_records.append(record)
+
+        self.records= cleaned_records
+
+    def stream_clean(self):
+        for record in self.records:
+            yield record
+
+    def stream_file(self, filename:str):
+        with open(filename,'r') as file:
+            read_FILE= csv.DictReader(file)
+
+            for row in read_FILE:
+                yield row
+
 dataset= Dataset()
-dataset.load("messy_people.csv")
+# dataset.load("messy_people.csv")
+# dataset.clean()
 
-mean_age, mean_score= dataset.calculate_means()
+# print("Cleaned Records:", len(dataset.records))
 
-print("Mean Age=", mean_age)
-print("Mean Score=", mean_score)
+# for record in dataset.stream_clean():
+#     print(record)
+
+for row in dataset.stream_file("messy_people.csv"):
+    print(row)
