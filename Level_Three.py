@@ -1,8 +1,11 @@
 from dataclasses import dataclass
 import csv
 from typing import Iterator
-from Level_Two import clean_age, clean_score, clean_city, clean_name
+import Level_Two
 
+print("Level Two file:", Level_Two.__file__)
+
+from Level_Two import clean_age, clean_score, clean_city, clean_name
 @dataclass
 class Record:
     id: str
@@ -136,7 +139,11 @@ class Dataset:
 
                 yield record
 
-dataset= Dataset()
+dataset = Dataset()
+
+print("STARTING LEVEL 3")
 
 for record in dataset.stream_file("messy_people.csv"):
     print(record)
+
+print("ENDING LEVEL 3")
