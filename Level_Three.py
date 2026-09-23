@@ -137,10 +137,7 @@ class Dataset:
                 yield record
 
 dataset = Dataset()
-
-print("STARTING LEVEL 3")
+print("Records are:")
 
 for record in dataset.stream_file("messy_people.csv"):
     print(record)
-
-print("ENDING LEVEL 3")
