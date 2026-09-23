@@ -1,11 +1,8 @@
 from dataclasses import dataclass
 import csv
 from typing import Iterator
-import Level_Two
-
-print("Level Two file:", Level_Two.__file__)
-
 from Level_Two import clean_age, clean_score, clean_city, clean_name
+
 @dataclass
 class Record:
     id: str
