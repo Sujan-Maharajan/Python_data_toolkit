@@ -1,3 +1,4 @@
+print("LEVEL TWO LOADED")
 from words_to_num import word_into_number
 from dataclasses import dataclass
 import csv
@@ -105,7 +106,9 @@ def clean_score(score, mean_score=None):
         return None
 
     return score
-        
+
+
+    
 with open('messy_people.csv','r') as file:
     read_FILE= csv.DictReader(file)
     data= list(read_FILE)
@@ -166,14 +169,16 @@ for i in data:
     cleaned_records.append(obj)
 
 total_skipped= skipped_count + duplicate_count
-        
-print("Total Records=",len(data))
-print("Mean Age=",mean_age)
-print("Mean Score=",mean_score)
-print("Cleaned Records=",len(cleaned_records))
-print("Duplicate Ids=",duplicate_count)
-print("Total Skipped Rows=",total_skipped)
 
-print("\nCleaned records are:")
-for record in cleaned_records:
-    print(record)
+if __name__== "__main__":
+            
+    print("Total Records=",len(data))
+    print("Mean Age=",mean_age)
+    print("Mean Score=",mean_score)
+    print("Cleaned Records=",len(cleaned_records))
+    print("Duplicate Ids=",duplicate_count)
+    print("Total Skipped Rows=",total_skipped)
+
+    print("\nCleaned records are:")
+    for record in cleaned_records:
+        print(record)
