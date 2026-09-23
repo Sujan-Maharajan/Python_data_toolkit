@@ -107,7 +107,7 @@ def clean_score(score, mean_score=None):
     return score
 
 if __name__== "__main__":
-
+    
     with open('messy_people.csv','r') as file:
         read_FILE= csv.DictReader(file)
         data= list(read_FILE)
