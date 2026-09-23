@@ -105,75 +105,77 @@ def clean_score(score, mean_score=None):
         return None
 
     return score
-        
-with open('messy_people.csv','r') as file:
-    read_FILE= csv.DictReader(file)
-    data= list(read_FILE)
 
-cleaned_records= []
-valid_ages= []
-valid_scores= []
-duplicate_count= 0
-skipped_count= 0
-seen_ids= set()
+if __name__== "__main__":
 
-#Collectting valid ages and valid scores for mean
+    with open('messy_people.csv','r') as file:
+        read_FILE= csv.DictReader(file)
+        data= list(read_FILE)
 
-for i in data:
-    age= clean_age(i["age"])
+    cleaned_records= []
+    valid_ages= []
+    valid_scores= []
+    duplicate_count= 0
+    skipped_count= 0
+    seen_ids= set()
 
-    if age is not None:
-        valid_ages.append(age)
+    #Collectting valid ages and valid scores for mean
 
-    score= clean_score(i["score"])
+    for i in data:
+        age= clean_age(i["age"])
 
-    if score is not None:
-        valid_scores.append(score)
+        if age is not None:
+            valid_ages.append(age)
 
-mean_age= sum(valid_ages)/len(valid_ages)
-mean_score= sum(valid_scores)/len(valid_scores)
+        score= clean_score(i["score"])
 
-for i in data:
-    obj= Record(i["id"], i["name"], i["age"], i["city"], i["score"])
+        if score is not None:
+            valid_scores.append(score)
 
-    age= clean_age(obj.age,mean_age)
+    mean_age= sum(valid_ages)/len(valid_ages)
+    mean_score= sum(valid_scores)/len(valid_scores)
 
-    if age is None:
-        skipped_count+= 1
-        continue
+    for i in data:
+        obj= Record(i["id"], i["name"], i["age"], i["city"], i["score"])
 
-    obj.age= age
-    obj.name= clean_name(obj.name)
-    obj.city= clean_city(obj.city)
+        age= clean_age(obj.age,mean_age)
 
-    score= clean_score(obj.score,mean_score)
+        if age is None:
+            skipped_count+= 1
+            continue
 
-    if score is None:
-        skipped_count+= 1
-        continue
+        obj.age= age
+        obj.name= clean_name(obj.name)
+        obj.city= clean_city(obj.city)
 
-    obj.score= score
+        score= clean_score(obj.score,mean_score)
 
-    if obj.id.strip()=="":
-        skipped_count+= 1
-        continue
+        if score is None:
+            skipped_count+= 1
+            continue
 
-    if obj.id in seen_ids:
-        duplicate_count+= 1
-        continue
+        obj.score= score
 
-    seen_ids.add(obj.id)
-    cleaned_records.append(obj)
+        if obj.id.strip()=="":
+            skipped_count+= 1
+            continue
 
-total_skipped= skipped_count + duplicate_count
-        
-print("Total Records=",len(data))
-print("Mean Age=",mean_age)
-print("Mean Score=",mean_score)
-print("Cleaned Records=",len(cleaned_records))
-print("Duplicate Ids=",duplicate_count)
-print("Total Skipped Rows=",total_skipped)
+        if obj.id in seen_ids:
+            duplicate_count+= 1
+            continue
 
-print("\nCleaned records are:")
-for record in cleaned_records:
-    print(record)
+        seen_ids.add(obj.id)
+        cleaned_records.append(obj)
+
+    total_skipped= skipped_count + duplicate_count
+            
+    print("Total Records=",len(data))
+    print("Mean Age=",mean_age)
+    print("Mean Score=",mean_score)
+    print("Cleaned Records=",len(cleaned_records))
+    print("Duplicate Ids=",duplicate_count)
+    print("Total Skipped Rows=",total_skipped)
+
+    print("\nCleaned records are:")
+    for record in cleaned_records:
+        print(record)
