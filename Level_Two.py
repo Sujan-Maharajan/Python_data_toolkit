@@ -1,5 +1,4 @@
 print("LEVEL TWO LOADED")
-print("LEVEL TWO __name__ =", __name__)
 from words_to_num import word_into_number
 from dataclasses import dataclass
 import csv
