@@ -1,0 +1,22 @@
+Analysis timing:
+average_score took 0.000014 seconds
+people_per_city took 0.000039 seconds
+oldest_person took 0.000020 seconds
+youngest_person took 0.000018 seconds
+
+DATA CLEANING REPORT
+====================
+
+Rows loaded: 72
+Rows cleaned: 65
+Rows dropped: 7
+
+Drop reasons:
+duplicate id: 5
+empty id: 2
+
+Key Statistics:
+Average score: 43.85404791929382
+People per city: {'Pokhara': 10, 'Unknown city': 10, 'Lalitpur': 19, 'Kathmandu': 11, 'Biratnagar': 5, 'Chitwan': 10}
+Oldest person: Record(id='41', name='Jyoti', age=40, city='Lalitpur', score=84.4)
+Youngest person: Record(id='20', name='Elina', age=17, city='Kathmandu', score=73.0)
