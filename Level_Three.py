@@ -13,7 +13,8 @@ class Record:
 
 class Dataset:
     def __init__(self):
-        self.records= []
+        self.records=[]
+        self.drop_reasons={}
 
     def load(self, filename:str) -> None:
         with open(filename,'r') as file:
@@ -67,27 +68,33 @@ class Dataset:
         return mean_age, mean_score
 
     def clean(self) -> None:
+        self.drop_reasons={}
+
         mean_age, mean_score= self.calculate_means()
 
-        cleaned_records= []
+        cleaned_records=[]
         seen_ids= set()
 
         for record in self.records:
 
             if record.id.strip()=="":
+                self.drop_reasons["empty id"]= self.drop_reasons.get("empty id", 0)+ 1
                 continue
 
             if record.id in seen_ids:
+                self.drop_reasons["duplicate id"]= self.drop_reasons.get("duplicate id", 0)+ 1
                 continue
 
             age= clean_age(record.age,mean_age)
 
             if age is None:
+                self.drop_reasons["invalid age"]= self.drop_reasons.get("invalid age", 0)+ 1
                 continue
 
             score= clean_score(record.score,mean_score)
 
             if score is None:
+                self.drop_reasons["invalid score"]= self.drop_reasons.get("invalid score", 0)+ 1
                 continue
 
             record.age= age
