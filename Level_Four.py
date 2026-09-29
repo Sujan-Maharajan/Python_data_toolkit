@@ -2,10 +2,6 @@ from Level_One import Record
 from Level_Three import Dataset
 import time
 
-dataset= Dataset()
-dataset.load("messy_people.csv")
-dataset.clean()
-
 def log_time(func):
     def wrapper(*args,**kwargs):
         start_time= time.time()
@@ -29,7 +25,6 @@ def average_score(dataset: Dataset) -> float:
     average= total_score/ len(dataset.records)
 
     return average
-print("Average Score:",average_score(dataset))
 
 @log_time
 def people_per_city(dataset: Dataset) -> dict:
@@ -43,7 +38,6 @@ def people_per_city(dataset: Dataset) -> dict:
         else:
             city_count[city]+=1
     return city_count
-print("People per city:", people_per_city(dataset))
 
 @log_time
 def oldest_person(dataset: Dataset) -> Record:
@@ -54,7 +48,6 @@ def oldest_person(dataset: Dataset) -> Record:
             oldest_person= record
 
     return oldest_person
-print("Oldest person:",oldest_person(dataset))
 
 @log_time
 def youngest_person(dataset: Dataset) -> Record:
@@ -65,4 +58,13 @@ def youngest_person(dataset: Dataset) -> Record:
             youngest_person= record
 
     return youngest_person
-print("Youngest person:",youngest_person(dataset))
+
+if __name__ == "__main__":
+    dataset= Dataset()
+    dataset.load("messy_people.csv")
+    dataset.clean()
+
+    print("Average Score:",average_score(dataset))
+    print("People per city:", people_per_city(dataset))
+    print("Oldest person:",oldest_person(dataset))
+    print("Youngest person:",youngest_person(dataset))
