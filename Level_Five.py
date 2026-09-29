@@ -20,3 +20,6 @@ print("\n")
 
 report = create_report(rows_loaded, rows_cleaned, rows_dropped, dataset.drop_reasons, average, cities, oldest, youngest)
 print (report)
+
+with open ("report.txt","w") as file:
+    file.write(report)
