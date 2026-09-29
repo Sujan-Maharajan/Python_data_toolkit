@@ -1,10 +1,26 @@
 from Level_One import Record
 from Level_Three import Dataset
+import time
 
 dataset= Dataset()
 dataset.load("messy_people.csv")
 dataset.clean()
 
+def log_time(func):
+    def wrapper(*args,**kwargs):
+        start_time= time.time()
+
+        result= func(*args,**kwargs)
+
+        end_time= time.time()
+
+        print(f"{func.__name__} took {end_time - start_time:.6f} seconds")
+
+        return result
+
+    return wrapper
+
+@log_time
 def average_score(dataset: Dataset) -> float:
     total_score= 0
 
