@@ -46,23 +46,23 @@ def people_per_city(dataset: Dataset) -> dict:
 print("People per city:", people_per_city(dataset))
 
 @log_time
-def highest_age(dataset: Dataset) -> Record:
-    highest_age= dataset.records[0]
+def oldest_person(dataset: Dataset) -> Record:
+    oldest_person= dataset.records[0]
 
     for record in dataset.records:
-        if record.age > highest_age.age:
-            highest_age= record
+        if record.age > oldest_person.age:
+            oldest_person= record
 
-    return highest_age
-print("Highest age:",highest_age(dataset))
+    return oldest_person
+print("Oldest person:",oldest_person(dataset))
 
 @log_time
-def lowest_age(dataset: Dataset) -> Record:
-    lowest_age= dataset.records[0]
+def youngest_person(dataset: Dataset) -> Record:
+    youngest_person= dataset.records[0]
 
     for record in dataset.records:
-        if record.age < lowest_age.age:
-            lowest_age= record
+        if record.age < youngest_person.age:
+            youngest_person= record
 
-    return lowest_age
-print("Lowest age:",lowest_age(dataset))
+    return youngest_person
+print("Youngest person:",youngest_person(dataset))
