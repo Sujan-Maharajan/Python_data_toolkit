@@ -137,7 +137,8 @@ class Dataset:
                 yield record
 
 dataset = Dataset()
-print("Records are:")
 
-for record in dataset.stream_file("messy_people.csv"):
-    print(record)
+if __name__== "__main__":
+    print("Records are:")
+    for record in dataset.stream_file("messy_people.csv"):
+        print(record)
