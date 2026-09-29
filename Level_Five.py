@@ -1,5 +1,5 @@
 from Level_Three import Dataset
-from Level_Four import average_score, people_per_city, oldest_person, youngest_person
+from Level_Four import average_score, people_per_city, oldest_person, youngest_person, timings
 from report import create_report
 
 dataset= Dataset()
@@ -20,3 +20,12 @@ print("\n")
 
 report = create_report(rows_loaded, rows_cleaned, rows_dropped, dataset.drop_reasons, average, cities, oldest, youngest)
 print (report)
+
+with open ("report.txt","w") as file:
+    file.write("Analysis timing:\n")
+
+    for function, elapsed in timings.items():
+        file.write(f"{function} took {elapsed:.6f} seconds\n")
+
+    file.write("\n")
+    file.write(report)
