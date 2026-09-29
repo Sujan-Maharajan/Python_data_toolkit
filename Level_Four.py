@@ -1,6 +1,7 @@
 from Level_One import Record
 from Level_Three import Dataset
 import time
+timings={}
 
 def log_time(func):
     def wrapper(*args,**kwargs):
@@ -9,8 +10,10 @@ def log_time(func):
         result= func(*args,**kwargs)
 
         end_time= time.time()
+        correct= end_time - start_time
+        timings[func.__name__]= correct
 
-        print(f"{func.__name__} took {end_time - start_time:.6f} seconds")
+        print(f"{func.__name__} took {correct:.6f} seconds")
 
         return result
 
