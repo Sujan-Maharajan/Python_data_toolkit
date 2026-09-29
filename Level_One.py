@@ -44,14 +44,15 @@ for i in data:
     else:
         invalid_records.append(obj)
 
-print("Valid Records=",len(valid_records))
-print("Invalid Records=",len(invalid_records))
+if __name__== "__main__":
+    print("Valid Records=",len(valid_records))
+    print("Invalid Records=",len(invalid_records))
 
-print("\nValid records are:")
-for record in valid_records:
-    print(record)
+    print("\nValid records are:")
+    for record in valid_records:
+        print(record)
 
-print("\nInvalid records are:")
-for record in invalid_records:
-    print(record)
-    print(record.get_errors())
+    print("\nInvalid records are:")
+    for record in invalid_records:
+        print(record)
+        print(record.get_errors())
