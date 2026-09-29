@@ -31,6 +31,7 @@ def average_score(dataset: Dataset) -> float:
     return average
 print("Average Score:",average_score(dataset))
 
+@log_time
 def people_per_city(dataset: Dataset) -> dict:
     city_count= {}
 
@@ -44,6 +45,7 @@ def people_per_city(dataset: Dataset) -> dict:
     return city_count
 print("People per city:", people_per_city(dataset))
 
+@log_time
 def highest_age(dataset: Dataset) -> Record:
     highest_age= dataset.records[0]
 
@@ -54,6 +56,7 @@ def highest_age(dataset: Dataset) -> Record:
     return highest_age
 print("Highest age:",highest_age(dataset))
 
+@log_time
 def lowest_age(dataset: Dataset) -> Record:
     lowest_age= dataset.records[0]
 
